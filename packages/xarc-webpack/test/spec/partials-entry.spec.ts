@@ -2,10 +2,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires, global-require */
 /* eslint-disable max-nested-callbacks, no-unused-expressions */
 
-import { expect } from "chai";
-import * as Fs from "fs";
-import * as Os from "os";
-import * as Path from "path";
+// keep this file free of `import` syntax so node parses it as CommonJS and
+// ts-node handles it - the tests reload modules through require.cache
+const { expect } = require("chai");
+const Fs = require("fs");
+const Os = require("os");
+const Path = require("path");
 
 const ENTRY_MODULE = "../../src/partials/entry";
 const OPTIONS_MODULE = "../../src/util/load-xarc-options";
