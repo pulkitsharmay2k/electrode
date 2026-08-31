@@ -7,6 +7,7 @@ const {
   resetCdn,
   loadAssetsFromStats,
   getSubAppBundle,
+  getSubAppEntryPoints,
   getChunksById,
   getBundleBase,
   loadCdnAssets,
@@ -65,6 +66,42 @@ describe("getSubAppBundle", function () {
     expect(bundles.size).to.be.above(0);
     expect(bundles.chunks).to.be.an("array");
     expect(bundles.chunkNames).to.be.an("array");
+  });
+
+  it("should not mutate the shared entry points when a subapp is rendered again", () => {
+    const { assets } = loadAssetsFromStats(Path.join(__dirname, "../data/prod-stats.json"));
+    assets.chunks = assets.chunks.concat({ id: 100, names: ["mainbody~.bootstrap"] });
+    const entryPoints = assets.entryPoints.mainbody.slice();
+
+    getSubAppBundle("MainBody", assets);
+    getSubAppBundle("MainBody", assets);
+
+    expect(assets.entryPoints.mainbody).to.deep.equal(entryPoints);
+  });
+});
+
+describe("getSubAppEntryPoints", function () {
+  const makeAssets = () => ({
+    entryPoints: { mainbody: [0, 1] },
+    chunks: [
+      { id: 0, names: ["vendors"] },
+      { id: 5, names: ["mainbody~.bootstrap"] }
+    ]
+  });
+
+  it("should add the async bootstrap chunk without mutating the entry points", () => {
+    const assets = makeAssets();
+
+    expect(getSubAppEntryPoints("mainbody", assets)).to.deep.equal([0, 1, 5]);
+    expect(getSubAppEntryPoints("mainbody", assets)).to.deep.equal([0, 1, 5]);
+    expect(assets.entryPoints.mainbody).to.deep.equal([0, 1]);
+  });
+
+  it("should return the entry points as is when there's no async bootstrap chunk", () => {
+    const assets = makeAssets();
+    assets.chunks = [{ id: 0, names: ["vendors"] }];
+
+    expect(getSubAppEntryPoints("mainbody", assets)).to.deep.equal([0, 1]);
   });
 });
 

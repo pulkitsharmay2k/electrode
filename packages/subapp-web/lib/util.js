@@ -55,21 +55,14 @@ const utils = {
   getSubAppBundle: (name, assets) => {
     const entryName = name.toLowerCase();
     // find entry point
-    const entryPoints = assets.entryPoints[entryName];
-    if (!entryPoints) {
+    if (!assets.entryPoints[entryName]) {
       tryThrowOriginalSubappRegisterError(name);
       throw new Error(
         `subapp-web: no entry point found for subapp '${name}' - please double check its directory name match ${entryName}.`
       );
     }
 
-    const asyncChunk = assets.chunks.find(
-      chunk => chunk.names.indexOf(`${entryName.replace("/", "_")}~.bootstrap`) >= 0
-    );
-
-    if (asyncChunk) {
-      entryPoints.push(asyncChunk.id);
-    }
+    const entryPoints = utils.getSubAppEntryPoints(entryName, assets);
     //
     // Normal entry output bundles are generated as <entryName>.bundle[.dev].js,
     // like header.bundle.js
@@ -107,6 +100,22 @@ const utils = {
     // TODO: handle subapp bundle that got broken into multiple chunks, when splitChunks
     // minSize + maxSize cause it to be broken up
     return bundleAssets[0];
+  },
+
+  //
+  // Get the entry point chunk IDs for a subapp entry, with the async bootstrap
+  // chunk (generated for MFE standalone subapps) appended when there's one.
+  //
+  // The assets are loaded once from stats.json and shared by every render, so
+  // this returns a new array instead of appending to the shared entry points.
+  //
+  getSubAppEntryPoints: (entryName, assets) => {
+    const entryPoints = assets.entryPoints[entryName];
+    const asyncChunk = [].concat(assets.chunks).find(chunk => {
+      return chunk && chunk.names.indexOf(`${entryName.replace("/", "_")}~.bootstrap`) >= 0;
+    });
+
+    return asyncChunk ? entryPoints.concat(asyncChunk.id) : entryPoints;
   },
 
   getBundleBase: routeData => {
