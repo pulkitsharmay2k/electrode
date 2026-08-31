@@ -6,6 +6,9 @@ const Fs = require("fs");
 const Path = require("path");
 const Os = require("os");
 
+// node's native typescript loader hands specs a require() without a cache
+const nodeRequire = require("module").createRequire(__filename);
+
 const ENTRY_MODULE = Path.resolve(__dirname, "../../src/partials/entry.ts");
 const LOAD_OPTIONS_MODULE = Path.resolve(__dirname, "../../src/util/load-xarc-options.ts");
 
@@ -19,9 +22,9 @@ function loadMakeEntryPartial(appDir: string, options: any) {
   Fs.mkdirSync(etmp, { recursive: true });
   Fs.writeFileSync(Path.join(etmp, "xarc-options.json"), JSON.stringify(options));
   process.env.XARC_CWD = appDir;
-  delete require.cache[ENTRY_MODULE];
-  delete require.cache[LOAD_OPTIONS_MODULE];
-  return require(ENTRY_MODULE);
+  delete nodeRequire.cache[ENTRY_MODULE];
+  delete nodeRequire.cache[LOAD_OPTIONS_MODULE];
+  return nodeRequire(ENTRY_MODULE);
 }
 
 function makeAppDir() {
@@ -46,7 +49,7 @@ function baseOptions(appDir: string, overrides: any = {}) {
   );
 }
 
-const JSONP_CDN = require.resolve("../../src/client/webpack5-jsonp-cdn.ts");
+const JSONP_CDN = nodeRequire.resolve("../../src/client/webpack5-jsonp-cdn.ts");
 
 describe("partials/entry", () => {
   let appDir: string;
