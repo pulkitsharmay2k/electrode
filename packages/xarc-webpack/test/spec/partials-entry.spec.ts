@@ -2,12 +2,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires, global-require */
 /* eslint-disable max-nested-callbacks, no-unused-expressions */
 
-// keep this file free of `import` syntax so node parses it as CommonJS and
-// ts-node handles it - the tests reload modules through require.cache
+// keep this file free of `import` syntax so node parses it as commonjs -
+// the tests reload the entry partial through the module cache
 const { expect } = require("chai");
 const Fs = require("fs");
 const Os = require("os");
 const Path = require("path");
+// node's type stripping loader hands this file a limited require, so make a real
+// commonjs one - it goes through ts-node and exposes the module cache
+const nodeRequire = require("module").createRequire(__filename);
 
 const ENTRY_MODULE = "../../src/partials/entry";
 const OPTIONS_MODULE = "../../src/util/load-xarc-options";
@@ -45,14 +48,18 @@ function makeOptions(override: Partial<XarcOptions> = {}): XarcOptions {
   );
 }
 
+function purgeModuleCache() {
+  delete nodeRequire.cache[nodeRequire.resolve(ENTRY_MODULE)];
+  delete nodeRequire.cache[nodeRequire.resolve(OPTIONS_MODULE)];
+}
+
 /**
  * load a fresh copy of the entry partial so the cached xarc options don't leak
  */
 function loadEntryPartial(options: XarcOptions) {
   saveXarcOptions(options);
-  delete require.cache[require.resolve(ENTRY_MODULE)];
-  delete require.cache[require.resolve(OPTIONS_MODULE)];
-  return require(ENTRY_MODULE);
+  purgeModuleCache();
+  return nodeRequire(ENTRY_MODULE);
 }
 
 function writeFile(file: string, content = "") {
@@ -62,7 +69,7 @@ function writeFile(file: string, content = "") {
   return full;
 }
 
-const jsonpCdn = require.resolve("../../src/client/webpack5-jsonp-cdn");
+const jsonpCdn = nodeRequire.resolve("../../src/client/webpack5-jsonp-cdn");
 
 describe("@xarc/webpack partials/entry", () => {
   const saveEnv = { XARC_CWD: process.env.XARC_CWD, WEBPACK_DEV: process.env.WEBPACK_DEV };
@@ -81,8 +88,7 @@ describe("@xarc/webpack partials/entry", () => {
         process.env[k] = saveEnv[k];
       }
     });
-    delete require.cache[require.resolve(ENTRY_MODULE)];
-    delete require.cache[require.resolve(OPTIONS_MODULE)];
+    purgeModuleCache();
     Fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
