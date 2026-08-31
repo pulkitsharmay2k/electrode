@@ -407,6 +407,183 @@ describe("SSR React framework", function () {
     );
   });
 
+  it("should render server's StartComponent instead of subapp Component", () => {
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        Component: () => <div>from subapp</div>
+      },
+      subAppServer: {
+        StartComponent: () => <div>from server</div>
+      },
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    return asyncVerify(
+      () => framework.handleSSR(),
+      (stream, next) => getStreamWritable(stream, next),
+      res => expect(res).contains("<div>from server</div>")
+    );
+  });
+
+  it("should not wrap react router when server provides StartComponent", async () => {
+    const StartComponent = () => <div>from server</div>;
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        useReactRouter: true,
+        Component: () => <div>from subapp</div>
+      },
+      subAppServer: { StartComponent },
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    await framework.handlePrepare();
+    expect(framework.StartComponent).equals(StartComponent);
+  });
+
+  it("should render react router subapp with request path", () => {
+    const Component = () => (
+      <Routes>
+        <Route path="/test" element={<div>Hello test path</div>} />
+      </Routes>
+    );
+
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        useReactRouter: true,
+        Component
+      },
+      subAppServer: {},
+      options: { serverSideRendering: true },
+      context: {
+        user: {
+          request: { path: "/test" }
+        }
+      }
+    });
+    return asyncVerify(
+      () => framework.handleSSR(),
+      (stream, next) => getStreamWritable(stream, next),
+      res => expect(res).contains("Hello test path<")
+    );
+  });
+
+  it("should prepare data only once for a single SSR", async () => {
+    let prepareCount = 0;
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        prepare: () => {
+          prepareCount++;
+          return { test: "foo bar" };
+        },
+        Component: props => <div>Hello {props.test}</div>
+      },
+      subAppServer: {},
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    await framework.handlePrepare();
+    return asyncVerify(
+      () => framework.handleSSR(),
+      (stream, next) => getStreamWritable(stream, next),
+      () => expect(prepareCount).equals(1)
+    );
+  });
+
+  it("should not attach initial state if subapp asks to skip it", async () => {
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        prepare: () => ({ test: "foo bar" }),
+        Component: props => <div>Hello {props.test}</div>
+      },
+      subAppServer: { attachInitialState: false },
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    await framework.handlePrepare();
+    expect(framework.initialState).to.deep.equal({ test: "foo bar" });
+    expect(framework.initialStateStr).equals(undefined);
+  });
+
+  it("should use the store returned from prepare for redux subapp", () => {
+    const Component = connect(x => x)(props => <div>Hello {props.test}</div>);
+    const store = Redux.createStore(x => x, { test: "foo bar" });
+
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        __redux: true,
+        Component,
+        prepare: () => ({ initialState: { test: "foo bar" }, store })
+      },
+      subAppServer: {},
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    return asyncVerify(
+      () => framework.handleSSR(),
+      (stream, next) => getStreamWritable(stream, next),
+      res => {
+        expect(res).contains(`<div>Hello <!-- -->foo bar</div>`);
+        expect(framework.store).equals(store);
+      }
+    );
+  });
+
+  it("should call server's reduxStoreReady with the store", async () => {
+    const Component = connect(x => x)(props => <div>Hello {props.test}</div>);
+    let readyStore;
+
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        __redux: true,
+        Component,
+        reduxCreateStore: initState => Redux.createStore(x => x, initState),
+        prepare: () => ({ test: "foo bar" })
+      },
+      subAppServer: {
+        reduxStoreReady: ({ store }) => (readyStore = store)
+      },
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    await framework.handlePrepare();
+    expect(readyStore).equals(framework.store);
+  });
+
+  it("should fail redux subapp that doesn't provide a store", async () => {
+    const framework = new lib.FrameworkLib({
+      subApp: {
+        __redux: true,
+        name: "test-subapp",
+        Component: () => <div>Hello</div>
+      },
+      subAppServer: {},
+      options: { serverSideRendering: true },
+      context: {
+        user: {}
+      }
+    });
+    let error;
+    try {
+      await framework.handleSSR();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).to.be.an("error");
+    expect(error.message).contains("test-subapp didn't provide store");
+  });
+
   it("should render subapp with custom renderer e.g. css in js solution", async () => {
     const Component = () => {
       return <div>Hello test path</div>;

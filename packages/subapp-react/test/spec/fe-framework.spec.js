@@ -50,6 +50,80 @@ describe("FE React framework", function () {
     expect(element.innerHTML).equals(`<p>hello <!-- -->bar</p>`);
   });
 
+  it("should render StartComponent over Component when both are provided", () => {
+    const dom = new JSDOM(`<div id="test"></div>`);
+    global.window = dom.window;
+    const element = dom.window.document.getElementById("test");
+    const framework = new feLib.FrameworkLib({
+      subApp: {
+        info: {
+          Component: props => <p>component {props.foo}</p>,
+          StartComponent: props => <p>start {props.foo}</p>
+        }
+      },
+      element,
+      options: { props: { foo: "bar" } }
+    });
+
+    act(() => framework.renderStart());
+
+    expect(element.innerHTML).equals(`<p>start bar</p>`);
+  });
+
+  it("should render with prepared props overridden by options props", () => {
+    const dom = new JSDOM(`<div id="test"></div>`);
+    global.window = dom.window;
+    const element = dom.window.document.getElementById("test");
+    const framework = new feLib.FrameworkLib({
+      subApp: {
+        info: {
+          Component: props => (
+            <p>
+              {props.hello} {props.foo}
+            </p>
+          )
+        }
+      },
+      element,
+      options: { _prepared: { hello: "world", foo: "prepared" }, props: { foo: "bar" } }
+    });
+
+    act(() => framework.renderStart());
+
+    expect(element.innerHTML).equals(`<p>world bar</p>`);
+  });
+
+  it("should save the subapp root on the subapp info", () => {
+    const dom = new JSDOM(`<div id="test"></div>`);
+    global.window = dom.window;
+    const element = dom.window.document.getElementById("test");
+    const info = {
+      Component: props => <p>hello {props.foo}</p>
+    };
+    const framework = new feLib.FrameworkLib({
+      subApp: { info },
+      element,
+      options: { props: { foo: "bar" } }
+    });
+
+    act(() => framework.renderStart());
+
+    expect(info.subappRoot).to.be.ok;
+    expect(info.subappRoot.render).to.be.a("function");
+  });
+
+  it("should not set subapp root when there's no DOM element", () => {
+    const info = { Component: () => <p>hello</p> };
+    const framework = new feLib.FrameworkLib({
+      subApp: { info },
+      options: { props: {} }
+    });
+
+    framework.renderStart();
+
+    expect(info.subappRoot).to.equal(undefined);
+  });
+
   it("should just return the component without DOM element", () => {
     const Component = props => <p>hello {props.foo}</p>;
 
