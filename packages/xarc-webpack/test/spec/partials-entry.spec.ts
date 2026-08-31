@@ -1,9 +1,10 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks, @typescript-eslint/no-var-requires */
-import { expect } from "chai";
-import * as Fs from "fs";
-import * as Path from "path";
-import * as Os from "os";
+// no ESM syntax here: the spec must load as CommonJS so it can bust require.cache
+const { expect } = require("chai");
+const Fs = require("fs");
+const Path = require("path");
+const Os = require("os");
 
 const ENTRY_MODULE = Path.resolve(__dirname, "../../src/partials/entry.ts");
 const LOAD_OPTIONS_MODULE = Path.resolve(__dirname, "../../src/util/load-xarc-options.ts");
