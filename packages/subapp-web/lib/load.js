@@ -153,15 +153,7 @@ module.exports = function setup(setupContext, { props: setupProps }) {
     const { assets, includedBundles } = context.user;
     const entryName = name.toLowerCase();
     //
-    const entryPoints = assets.entryPoints[entryName];
-
-    // Add async chunk if available to entrypoints.
-    const asyncChunk = assets.chunks.find(chunk =>
-      chunk.names.includes(`${entryName.replace("/", "_")}~.bootstrap`)
-    );
-    if (asyncChunk) {
-      entryPoints.push(asyncChunk.id);
-    }
+    const entryPoints = util.getSubAppEntryPoints(assets, entryName);
 
     const cdnJsBundles = util.getCdnJsBundles(assets, setupContext.routeOptions);
 

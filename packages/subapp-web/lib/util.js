@@ -47,6 +47,26 @@ const utils = {
     CDN_JS_BUNDLES = undefined;
   },
   //
+  // Get the chunk IDs for a subapp's entry point, with its async bootstrap chunk
+  // appended when there's one.
+  // The assets data is loaded once and shared by every request, so a new array is
+  // returned and the data in assets is never modified.
+  //
+  getSubAppEntryPoints: (assets, entryName) => {
+    const entryPoints = assets.entryPoints[entryName];
+    if (!entryPoints) {
+      return entryPoints;
+    }
+
+    const bootstrapName = `${entryName.replace("/", "_")}~.bootstrap`;
+    const asyncChunk = (assets.chunks || []).find(
+      chunk => chunk.names && chunk.names.indexOf(bootstrapName) >= 0
+    );
+
+    return asyncChunk ? entryPoints.concat(asyncChunk.id) : entryPoints.slice();
+  },
+
+  //
   // Each subapp is an entry, which has an array of all bundle IDs
   // using IDs to lookup bundle name from assets.chunksById
   // keep only chunks with name starts with subapp name
@@ -55,20 +75,12 @@ const utils = {
   getSubAppBundle: (name, assets) => {
     const entryName = name.toLowerCase();
     // find entry point
-    const entryPoints = assets.entryPoints[entryName];
+    const entryPoints = utils.getSubAppEntryPoints(assets, entryName);
     if (!entryPoints) {
       tryThrowOriginalSubappRegisterError(name);
       throw new Error(
         `subapp-web: no entry point found for subapp '${name}' - please double check its directory name match ${entryName}.`
       );
-    }
-
-    const asyncChunk = assets.chunks.find(
-      chunk => chunk.names.indexOf(`${entryName.replace("/", "_")}~.bootstrap`) >= 0
-    );
-
-    if (asyncChunk) {
-      entryPoints.push(asyncChunk.id);
     }
     //
     // Normal entry output bundles are generated as <entryName>.bundle[.dev].js,

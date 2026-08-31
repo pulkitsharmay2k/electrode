@@ -86,4 +86,37 @@ describe("load", function () {
     context.output.close();
     done();
   }).timeout(5000);
+
+  it("should mark the async bootstrap chunk loaded once per render", async () => {
+    process.env.APP_SRC_DIR = "test/subapps";
+    const { assets: ownAssets } = utils.loadAssetsFromStats(statsPath);
+    ownAssets.chunks.push({ id: "mainbody~.bootstrap", names: ["mainbody~.bootstrap"] });
+    ownAssets.chunksById.js["mainbody~.bootstrap"] = "mainbody~.bootstrap.bundle.dev.js";
+
+    const loadToken = load(
+      {
+        routeOptions: { cdn: {}, __internals: { assets: ownAssets } }
+      },
+      { props: { name: "mainbody" } }
+    );
+
+    const render = () =>
+      new Promise(resolve => {
+        const renderContext = {
+          user: { request: { app: {} }, assets: ownAssets, includedBundles: {} },
+          transform: x => x,
+          send: resolve
+        };
+        renderContext.output = new RenderOutput(renderContext);
+        loadToken.process(renderContext, props);
+        renderContext.output.close();
+      });
+
+    const countBootstrap = results => (results.match(/"mainbody~\.bootstrap"/g) || []).length;
+
+    expect(countBootstrap(await render())).to.equal(1);
+    // the assets data is shared by every request and must not accumulate the chunk
+    expect(ownAssets.entryPoints.mainbody).to.not.include("mainbody~.bootstrap");
+    expect(countBootstrap(await render())).to.equal(1);
+  }).timeout(5000);
 });

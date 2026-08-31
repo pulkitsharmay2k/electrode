@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "subapp-web",
+      "comment": "fix: don't mutate the shared assets entry points with the async bootstrap chunk on every render",
+      "type": "patch"
+    }
+  ],
+  "packageName": "subapp-web"
+}

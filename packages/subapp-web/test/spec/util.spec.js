@@ -7,6 +7,7 @@ const {
   resetCdn,
   loadAssetsFromStats,
   getSubAppBundle,
+  getSubAppEntryPoints,
   getChunksById,
   getBundleBase,
   loadCdnAssets,
@@ -65,6 +66,50 @@ describe("getSubAppBundle", function () {
     expect(bundles.size).to.be.above(0);
     expect(bundles.chunks).to.be.an("array");
     expect(bundles.chunkNames).to.be.an("array");
+  });
+});
+
+describe("getSubAppEntryPoints", function () {
+  const makeAssets = () => ({
+    entryPoints: { mainbody: ["vendors", "mainbody"] },
+    chunks: [
+      { id: "mainbody", names: ["mainbody"] },
+      { id: "bootstrap-chunk", names: ["mainbody~.bootstrap"] },
+      { id: "no-names" }
+    ]
+  });
+
+  it("should append the async bootstrap chunk", () => {
+    const assets = makeAssets();
+    expect(getSubAppEntryPoints(assets, "mainbody")).to.deep.equal([
+      "vendors",
+      "mainbody",
+      "bootstrap-chunk"
+    ]);
+  });
+
+  it("should not mutate the shared assets data on repeated calls", () => {
+    const assets = makeAssets();
+    getSubAppEntryPoints(assets, "mainbody");
+    getSubAppEntryPoints(assets, "mainbody");
+    expect(assets.entryPoints.mainbody).to.deep.equal(["vendors", "mainbody"]);
+    expect(getSubAppEntryPoints(assets, "mainbody")).to.deep.equal([
+      "vendors",
+      "mainbody",
+      "bootstrap-chunk"
+    ]);
+  });
+
+  it("should return a copy when there's no async bootstrap chunk", () => {
+    const assets = makeAssets();
+    assets.entryPoints.header = ["vendors", "header"];
+    const entryPoints = getSubAppEntryPoints(assets, "header");
+    entryPoints.push("extra");
+    expect(assets.entryPoints.header).to.deep.equal(["vendors", "header"]);
+  });
+
+  it("should return undefined for an unknown entry", () => {
+    expect(getSubAppEntryPoints(makeAssets(), "unknown")).to.equal(undefined);
   });
 });
 
