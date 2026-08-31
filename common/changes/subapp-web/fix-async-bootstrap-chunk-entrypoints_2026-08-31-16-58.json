@@ -1,0 +1,12 @@
+{
+  "changes": [
+    {
+      "changeType": 2,
+      "comment": "fix: stop appending the async bootstrap chunk to the shared stats entry points on every render",
+      "packageName": "subapp-web",
+      "type": "patch"
+    }
+  ],
+  "packageName": "subapp-web",
+  "email": "pulkitsharmay2k@gmail.com"
+}
