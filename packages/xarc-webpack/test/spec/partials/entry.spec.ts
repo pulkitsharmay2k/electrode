@@ -4,12 +4,25 @@ import { expect } from "chai";
 import * as Fs from "fs";
 import * as Os from "os";
 import * as Path from "path";
-import * as sinon from "sinon";
-import { logger } from "@xarc/dev-base";
+import { createRequire } from "module";
 
-const SRC_DIR = Path.resolve(__dirname, "../../../src");
+//
+// mocha loads this spec through ts-node on some node versions and through
+// node's own typescript/esm loader on others, so nothing here can rely on the
+// commonjs globals.  the modules under test are commonjs, so they are loaded
+// with a require made from the package dir, which also gives access to the
+// module cache they are cached in.
+//
+const PKG_DIR = process.cwd();
+const req = createRequire(Path.join(PKG_DIR, "index.js"));
+req("ts-node").register({ transpileOnly: true });
+
+const sinon = req("sinon");
+const { logger } = req("@xarc/dev-base");
+
+const SRC_DIR = Path.join(PKG_DIR, "src");
 const ENTRY_MODULE = Path.join(SRC_DIR, "partials/entry");
-const JSONP_CDN = require.resolve(Path.join(SRC_DIR, "client/webpack5-jsonp-cdn"));
+const JSONP_CDN = req.resolve(Path.join(SRC_DIR, "client/webpack5-jsonp-cdn"));
 
 type Manifest = {
   name: string;
@@ -25,9 +38,9 @@ type Manifest = {
  * loads, so every test needs a fresh copy of the modules under src.
  */
 function clearSrcModuleCache() {
-  for (const key of Object.keys(require.cache)) {
+  for (const key of Object.keys(req.cache)) {
     if (key.startsWith(SRC_DIR + Path.sep)) {
-      delete require.cache[key];
+      delete req.cache[key];
     }
   }
 }
@@ -61,7 +74,7 @@ function makeFixture(options: any = {}, subApps: Record<string, Manifest> = {}) 
 function makeEntryPartial(cwd: string) {
   process.env.XARC_CWD = cwd;
   clearSrcModuleCache();
-  return require(ENTRY_MODULE)();
+  return req(ENTRY_MODULE)();
 }
 
 function readGenerated(cwd: string, dir: string, file: string) {
