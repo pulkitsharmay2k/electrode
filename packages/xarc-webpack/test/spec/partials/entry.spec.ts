@@ -1,15 +1,20 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks, @typescript-eslint/no-var-requires */
 
-import { expect } from "chai";
-import * as sinon from "sinon";
-import * as Fs from "fs";
-import * as Os from "os";
-import * as Path from "path";
-import { logger } from "@xarc/dev-base";
+// no ESM syntax here: node's native typescript loader treats a spec with
+// import/export as an ES module, and entry.ts is only reachable with require
+const { expect } = require("chai");
+const sinon = require("sinon");
+const Fs = require("fs");
+const Os = require("os");
+const Path = require("path");
+const { logger } = require("@xarc/dev-base");
 
-const loadXarcOptionsMod = require("../../../src/util/load-xarc-options");
-const makeEntryPartial = require("../../../src/partials/entry");
+// node's native typescript loader resolves nested require calls as ESM, so use
+// a commonjs require to load the src modules through ts-node
+const cjsRequire = require("module").createRequire(__filename);
+const loadXarcOptionsMod = cjsRequire("../../../src/util/load-xarc-options");
+const makeEntryPartial = cjsRequire("../../../src/partials/entry");
 
 const DEV_HMR_DIR = ".__dev_hmr";
 const PROD_DIR = ".__prod__";
@@ -24,7 +29,7 @@ type Manifest = {
 };
 
 describe("partials/entry makeEntryPartial", () => {
-  let sandbox: sinon.SinonSandbox;
+  let sandbox: any;
   let cwd: string;
   let savedCwd: string;
   let savedWebpackDev: string;
