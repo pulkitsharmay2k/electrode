@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "subapp-server",
+      "comment": "fix: generate CSP nonce per request instead of on shared routeOptions",
+      "type": "patch"
+    }
+  ],
+  "packageName": "subapp-server"
+}

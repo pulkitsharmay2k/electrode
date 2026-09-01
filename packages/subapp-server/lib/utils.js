@@ -144,14 +144,16 @@ function nonceGenerator(_) {
 }
 
 /**
- * Sets CSP nonce to routeOptions and returns the nonce value
+ * Generate the CSP nonce value for a single request and store it on the request,
+ * so concurrent requests each render the nonce that's in their own CSP header.
  * cspNonce - boolean || object || string
  *
- * @param {*} param0
+ * @param {*} param0 routeOptions and the request being handled
  * @returns nonce value
  */
-function setCSPNonce({ routeOptions }) {
+function setCSPNonce({ routeOptions, request }) {
   let nonce = nonceGenerator();
+  let cspNonceValue;
 
   switch (typeof routeOptions.cspNonce) {
     // if cspNonce is a string, electrode validates it for nonce value and uses the same to set CSP header
@@ -161,7 +163,7 @@ function setCSPNonce({ routeOptions }) {
         "Error: unable to set CSP header. Invalid nonce value passed!"
       );
 
-      routeOptions.cspNonceValue = {
+      cspNonceValue = {
         styleNonce: routeOptions.cspNonce,
         scriptNonce: routeOptions.cspNonce
       };
@@ -172,7 +174,7 @@ function setCSPNonce({ routeOptions }) {
     // styles and script.
     case "boolean": {
       nonce = !!routeOptions.cspNonce === true ? nonce : "";
-      routeOptions.cspNonceValue = {
+      cspNonceValue = {
         styleNonce: nonce,
         scriptNonce: nonce
       };
@@ -181,7 +183,7 @@ function setCSPNonce({ routeOptions }) {
     // if cspHeader is an object, app should explicitly enable it for script and/or style.
     // cspHeader: { style: true } - will enable nonce only for styles
     case "object": {
-      routeOptions.cspNonceValue = {
+      cspNonceValue = {
         styleNonce: routeOptions.cspNonce && !!routeOptions.cspNonce.style === true ? nonce : "",
         scriptNonce: routeOptions.cspNonce && !!routeOptions.cspNonce.script === true ? nonce : ""
       };
@@ -190,7 +192,7 @@ function setCSPNonce({ routeOptions }) {
     // TODO: add 'case' so that app can pass a nonce generator function.
 
     default: {
-      routeOptions.cspNonceValue = {
+      cspNonceValue = {
         styleNonce: "",
         scriptNonce: ""
       };
@@ -198,7 +200,14 @@ function setCSPNonce({ routeOptions }) {
     }
   }
 
-  return routeOptions.cspNonceValue;
+  if (request) {
+    request.app = request.app || {};
+    request.app.cspNonceValue = cspNonceValue;
+  } else {
+    routeOptions.cspNonceValue = cspNonceValue;
+  }
+
+  return cspNonceValue;
 }
 
 function getCSPHeader({ styleNonce = "", scriptNonce = "" }) {

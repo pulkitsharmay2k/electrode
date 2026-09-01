@@ -414,9 +414,12 @@ ${ignoreMsg}`
 
     return emitter;
   },
-  getNonceValue(routeOptions) {
-    const scriptNonce = _.get(routeOptions, "cspNonceValue.scriptNonce", "");
-    const styleNonce = _.get(routeOptions, "cspNonceValue.styleNonce", "");
+  getNonceValue(routeOptions, request) {
+    // the nonce is generated per request, routeOptions is shared by all requests of a route
+    const cspNonceValue =
+      _.get(request, "app.cspNonceValue") || _.get(routeOptions, "cspNonceValue");
+    const scriptNonce = _.get(cspNonceValue, "scriptNonce", "");
+    const styleNonce = _.get(cspNonceValue, "styleNonce", "");
 
     return {
       scriptNonce: scriptNonce ? ` nonce="${scriptNonce}"` : "",

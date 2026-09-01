@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@xarc/index-page",
+      "comment": "fix: read CSP nonce from the request being rendered",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@xarc/index-page"
+}

@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "subapp-web",
+      "comment": "fix: render CSP nonce of the request being rendered",
+      "type": "patch"
+    }
+  ],
+  "packageName": "subapp-web"
+}

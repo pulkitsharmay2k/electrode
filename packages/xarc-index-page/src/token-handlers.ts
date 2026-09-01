@@ -22,8 +22,11 @@ export const tokens = {
   HTML_CLOSED: "HTML_CLOSED"
 };
 
-export const getNonceValue = (routeOptions) => {
-  const { scriptNonce: scriptToken = "", styleNonce: styleToken = "" } = routeOptions.cspNonceValue || {};
+export const getNonceValue = (routeOptions, request?) => {
+  // the nonce is generated per request, routeOptions is shared by all requests of a route
+  const cspNonceValue =
+    (request && request.app && request.app.cspNonceValue) || routeOptions.cspNonceValue;
+  const { scriptNonce: scriptToken = "", styleNonce: styleToken = "" } = cspNonceValue || {};
   return {
     scriptNonce: scriptToken ? ` nonce="${scriptToken}"` : "",
     styleNonce: styleToken ? ` nonce="${styleToken}"` : ""
@@ -75,7 +78,7 @@ export default function setup(handlerContext /*, asyncTemplate*/) {
 
     const { jsChunk, cssChunk } = getProdBundles(chunkNames, routeData);
 
-    const { scriptNonce, styleNonce } = getNonceValue(routeOptions);
+    const { scriptNonce, styleNonce } = getNonceValue(routeOptions, request);
 
     const renderJs = RENDER_JS && mode !== "nojs";
 

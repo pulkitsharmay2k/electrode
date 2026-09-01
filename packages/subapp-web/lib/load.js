@@ -75,12 +75,12 @@ module.exports = function setup(setupContext, { props: setupProps }) {
   // in webpack dev mode, we have to retrieve the subapp's JS bundle from webpack dev server
   // to inline in the index page.
   //
-  const retrieveDevServerBundle = async () => {
+  const retrieveDevServerBundle = async context => {
     return new Promise(resolve => {
       const routeOptions = setupContext.routeOptions;
       const path = Path.posix.join(bundleBase, bundleAsset.name);
       const bundleUrl = formUrl({ ...routeOptions.httpDevServer, path });
-      const { scriptNonce } = util.getNonceValue(setupContext.routeOptions);
+      const { scriptNonce } = util.getNonceValue(routeOptions, context.user.request);
 
       retrieveUrl(bundleUrl) //ToDo: Replace node-fetch with inbuilt fetch api when supports node 18+ versions
         .then(async resp => {
@@ -113,24 +113,26 @@ module.exports = function setup(setupContext, { props: setupProps }) {
   // - In production mode, we read its bundle from dist/js
   // - In webpack dev mode, we retrieve the bundle from webpack dev server every time
   //
+  // false, true (retrieve from webpack dev server), or a function that takes the
+  // request's CSP nonce values and returns the HTML to inline
   let inlineSubAppJs;
 
   const prepareSubAppJsBundle = () => {
     const { webpackDev } = setupContext.routeOptions;
-    const { scriptNonce, styleNonce } = util.getNonceValue(setupContext.routeOptions);
     if (setupProps.inlineScript === "always" || (setupProps.inlineScript === true && !webpackDev)) {
       if (!webpackDev) {
         // if we have to inline the subapp's JS bundle, we load it for production mode
         const src = Fs.readFileSync(Path.resolve("dist/js", bundleAsset.name)).toString();
         const ext = Path.extname(bundleAsset.name);
         if (ext === ".js") {
-          inlineSubAppJs = `<script${scriptNonce}>/*${name}*/${src}</script>`;
+          inlineSubAppJs = ({ scriptNonce }) => `<script${scriptNonce}>/*${name}*/${src}</script>`;
         } else if (ext === ".css") {
-          inlineSubAppJs = `<style${styleNonce} id="${name}">${src}</style>`;
+          inlineSubAppJs = ({ styleNonce }) => `<style${styleNonce} id="${name}">${src}</style>`;
         } else {
           const msg = makeDevDebugMessage(`Error: UNKNOWN bundle extension ${name}`);
           console.error(msg); // eslint-disable-line
-          inlineSubAppJs = makeDevDebugHtml(msg);
+          const debugHtml = makeDevDebugHtml(msg);
+          inlineSubAppJs = () => debugHtml;
         }
       } else {
         inlineSubAppJs = true;
@@ -167,7 +169,10 @@ module.exports = function setup(setupContext, { props: setupProps }) {
 
     const bundles = entryPoints.filter(ep => !includedBundles[ep]);
     const headSplits = [];
-    const { scriptNonce, styleNonce } = util.getNonceValue(context.user.routeOptions);
+    const { scriptNonce, styleNonce } = util.getNonceValue(
+      context.user.routeOptions,
+      context.user.request
+    );
 
     const splits = bundles
       .map(ep => {
@@ -222,9 +227,9 @@ module.exports = function setup(setupContext, { props: setupProps }) {
     if (inlineSubAppJs && !includedBundles[entryName]) {
       includedBundles[entryName] = true;
       if (inlineSubAppJs === true) {
-        splits.push(await retrieveDevServerBundle());
+        splits.push(await retrieveDevServerBundle(context));
       } else {
-        splits.push(inlineSubAppJs);
+        splits.push(inlineSubAppJs({ scriptNonce, styleNonce }));
       }
     }
 
@@ -302,7 +307,10 @@ module.exports = function setup(setupContext, { props: setupProps }) {
 
         let dynInitialState = "";
         let initialStateScript;
-        const { scriptNonce = "" } = util.getNonceValue(context.user.routeOptions);
+        const { scriptNonce = "" } = util.getNonceValue(
+          context.user.routeOptions,
+          context.user.request
+        );
         if (!initialStateStr) {
           initialStateScript = "{}";
         } else if (initialStateStr.length < INITIAL_STATE_SIZE_FOR_JSON) {
@@ -375,7 +383,10 @@ ${stack}`,
 
       const processSubapp = async () => {
         const namespace = setupContext.routeOptions.namespace;
-        const { scriptNonce } = util.getNonceValue(context.user.routeOptions);
+        const { scriptNonce } = util.getNonceValue(
+          context.user.routeOptions,
+          context.user.request
+        );
         context.user.numOfSubapps++;
         const { bundles, scripts, preLoads } = await prepareSubAppSplitBundles(context);
         outputSpot.add(`${comment}`);

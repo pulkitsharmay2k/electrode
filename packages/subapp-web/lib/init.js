@@ -54,8 +54,9 @@ module.exports = function setup(setupContext) {
   const namespaceScriptJs = namespace ? `window.__default__namespace="${namespace}";` : "";
 
   const scriptId = namespace ? namespace : "bundle";
-  const { scriptNonce = "" } = util.getNonceValue(setupContext.routeOptions);
-  const webSubAppJs = `<script${scriptNonce} id="${scriptId}Assets" type="application/json">
+  // the CSP nonce is generated for each request, so the script tags must be
+  // created while rendering a request, not once at setup time.
+  const makeWebSubAppJs = ({ scriptNonce = "" }) => `<script${scriptNonce} id="${scriptId}Assets" type="application/json">
 ${JSON.stringify(bundleAssets)}
 </script>
 <script${scriptNonce}>/*LJ*/${loadJs}/*LJ*/
@@ -120,7 +121,7 @@ ${cdnJs}
         }
       }
 
-      return webSubAppJs;
+      return makeWebSubAppJs(util.getNonceValue(setupContext.routeOptions, context.user.request));
     }
   };
 };

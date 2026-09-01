@@ -12,7 +12,8 @@ const {
   loadCdnAssets,
   getCdnJsBundles,
   getFramework,
-  setupFramework
+  setupFramework,
+  getNonceValue
 } = require("../../lib/util");
 
 describe("loadAssetsFromStats", () => {
@@ -94,6 +95,33 @@ describe("getCdnJsBundles", function () {
     loadCdnAssets(options, "test/data/cdn-assets.json");
     const cdnJsBundles = getCdnJsBundles(assets, options);
     expect(cdnJsBundles[7]).contains("http://cdnasset.com/hash-123.js");
+  });
+});
+
+describe("getNonceValue", function () {
+  const routeOptions = {
+    cspNonceValue: { scriptNonce: "route-script", styleNonce: "route-style" }
+  };
+
+  it("should use the nonce of the request being rendered", () => {
+    const request = {
+      app: { cspNonceValue: { scriptNonce: "req-script", styleNonce: "req-style" } }
+    };
+    expect(getNonceValue(routeOptions, request)).to.deep.equal({
+      scriptNonce: ` nonce="req-script"`,
+      styleNonce: ` nonce="req-style"`
+    });
+  });
+
+  it("should fallback to nonce from routeOptions", () => {
+    expect(getNonceValue(routeOptions, {})).to.deep.equal({
+      scriptNonce: ` nonce="route-script"`,
+      styleNonce: ` nonce="route-style"`
+    });
+  });
+
+  it("should return empty nonce when there's none", () => {
+    expect(getNonceValue({})).to.deep.equal({ scriptNonce: "", styleNonce: "" });
   });
 });
 

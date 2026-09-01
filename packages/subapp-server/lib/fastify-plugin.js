@@ -39,7 +39,7 @@ function makeRouteHandler({ path, routeRenderer, routeOptions }) {
 
   return async (request, reply) => {
     try {
-      const { styleNonce = "", scriptNonce = "" } = setCSPNonce({ routeOptions });
+      const { styleNonce = "", scriptNonce = "" } = setCSPNonce({ routeOptions, request });
 
       // wait for webpack stats to be valid if webpackDev
       if (webpackDev) {
