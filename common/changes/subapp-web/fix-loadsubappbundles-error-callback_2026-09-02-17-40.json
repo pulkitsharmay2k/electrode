@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "fix: loadSubAppBundles error callback referenced an undefined variable, so done() was never called when an asset failed to load",
+      "type": "patch",
+      "packageName": "subapp-web"
+    }
+  ],
+  "packageName": "subapp-web",
+  "email": "pulkitsharmay2k@gmail.com"
+}
