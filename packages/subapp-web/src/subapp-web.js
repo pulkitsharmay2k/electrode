@@ -381,8 +381,8 @@
             xv1.setBundle(id, 1, namespace);
             afterLoad();
           },
-          error: () => {
-            console.error(`load asset ${name} (id: ${id}) failed`, err);
+          error: depsNotFound => {
+            console.error(`load asset ${name} (id: ${id}) failed`, depsNotFound);
             afterLoad();
           }
         });

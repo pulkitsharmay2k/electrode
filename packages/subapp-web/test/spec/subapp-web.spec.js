@@ -20,6 +20,7 @@ describe("subapp-web xarc client v1", function () {
 </html>`);
 
   const jsLoaded = {};
+  let failLoad = false;
 
   before(() => {
     const xarc = "../../src/subapp-web.js";
@@ -31,7 +32,7 @@ describe("subapp-web xarc client v1", function () {
         throw new Error(`loadjs ${id} already loaded`);
       }
       jsLoaded[id] = true;
-      setTimeout(() => options.success(), 20);
+      setTimeout(() => (failLoad ? options.error([].concat(asset)) : options.success()), 20);
     };
     require(xarc);
     xarcV1 = global.window.xarcV1;
@@ -52,6 +53,23 @@ describe("subapp-web xarc client v1", function () {
       () => delay(50),
       () => {
         expect(jsLoaded).to.deep.equal({ runtime: true, "vendors.~73011e79": true, deal: true });
+      }
+    );
+  });
+
+  it("should invoke done for loadSubAppBundles when loading assets failed", () => {
+    let done = false;
+    failLoad = true;
+    return asyncVerify(
+      () => {
+        xarcV1.loadSubAppBundles("header", () => (done = true));
+      },
+      () => delay(50),
+      () => {
+        expect(done).to.equal(true);
+      },
+      () => {
+        failLoad = false;
       }
     );
   });
