@@ -75,6 +75,49 @@ describe("create", function () {
     check("devDependencies");
   });
 
+  //
+  // FAILING TEST - documents a real bug in src/create.js
+  //
+  // create.js does `const sortDeps = require("./sort-obj-keys")` instead of
+  // requiring "./sort-deps", then calls `sortDeps(pkg)` and ignores the return
+  // value. sort-obj-keys returns a new object and does not mutate its argument,
+  // so the dependencies of the generated package.json are never sorted. It only
+  // looks sorted today because template/_package.js happens to declare its
+  // dependencies in sorted order (see the passing test above).
+  //
+  // Left failing per instruction not to modify production code. The fix is to
+  // require "./sort-deps" in src/create.js.
+  //
+  it("should sort dependencies that the template declares out of order", async () => {
+    const templatePath = require.resolve("../../template/_package");
+    const createPath = require.resolve("../../src/create");
+    const savedTemplate = require.cache[templatePath];
+    require.cache[templatePath] = {
+      id: templatePath,
+      filename: templatePath,
+      loaded: true,
+      exports: () => ({
+        name: "my-x-app",
+        dependencies: { zebra: "^1.0.0", alpha: "^1.0.0" },
+      }),
+    };
+
+    delete require.cache[createPath];
+
+    try {
+      process.argv[2] = Path.join(tmpDir, "unsorted-app");
+      await require("../../src/create")();
+
+      const pkg = JSON.parse(
+        Fs.readFileSync(Path.join(tmpDir, "unsorted-app", "package.json"), "utf8")
+      );
+      expect(Object.keys(pkg.dependencies)).to.deep.equal(["alpha", "zebra"]);
+    } finally {
+      require.cache[templatePath] = savedTemplate;
+      delete require.cache[createPath];
+    }
+  });
+
   it("should not create anything when user declines a non empty directory", async () => {
     const appDir = Path.join(tmpDir, "used-app");
     Fs.mkdirSync(appDir);
