@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks, @typescript-eslint/no-var-requires */
-import { expect } from "chai";
-import * as Fs from "fs";
-import * as Os from "os";
-import * as Path from "path";
+const { expect } = require("chai");
+const Fs = require("fs");
+const Os = require("os");
+const Path = require("path");
 
 const ENTRY_MODULE = require.resolve("../../../src/partials/entry");
 const LOAD_XARC_OPTIONS_MODULE = require.resolve("../../../src/util/load-xarc-options");
