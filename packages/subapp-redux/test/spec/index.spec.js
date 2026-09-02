@@ -7,6 +7,7 @@ const {
   setStoreContainer,
 } = require("../../src/shared");
 const { getSubAppContainer } = require("subapp-util");
+const { applyMiddleware } = require("@reduxjs/toolkit");
 
 const SimpleReducer = (x = true) => x;
 
@@ -194,6 +195,55 @@ describe("subapp-redux", function () {
     expect(container.namedStores).to.deep.equal({});
     const state = store.getState();
     expect(state.a).equals(2);
+  });
+
+  it("should apply reduxEnhancer to a private store", () => {
+    const calls = [];
+    const logger = () => next => action => {
+      calls.push(action.type);
+      return next(action);
+    };
+    const store = getReduxCreateStore({
+      name: "app",
+      reduxReducers: { a: (x = 2) => x },
+      reduxEnhancer: () => applyMiddleware(logger)
+    })({});
+
+    store.dispatch({ type: "test-action" });
+    expect(calls).to.include("test-action");
+  });
+
+  it("should apply reduxEnhancer to a shared store", () => {
+    const calls = [];
+    const logger = () => next => action => {
+      calls.push(action.type);
+      return next(action);
+    };
+    const store = getReduxCreateStore({
+      name: "app",
+      reduxReducers: { a: (x = 2) => x },
+      reduxShareStore: true,
+      reduxEnhancer: () => applyMiddleware(logger)
+    })({});
+
+    store.dispatch({ type: "test-action" });
+    expect(calls).to.include("test-action");
+  });
+
+  it("should accept an array of middleware", () => {
+    const calls = [];
+    const logger = () => next => action => {
+      calls.push(action.type);
+      return next(action);
+    };
+    const store = getReduxCreateStore({
+      name: "app",
+      reduxReducers: { a: (x = 2) => x },
+      middleware: [logger]
+    })({});
+
+    store.dispatch({ type: "test-action" });
+    expect(calls).to.include("test-action");
   });
 
   it("should create private store with default reducer if no reducer provided", () => {

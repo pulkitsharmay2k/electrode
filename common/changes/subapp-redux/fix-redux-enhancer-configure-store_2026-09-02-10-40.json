@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "fix: adapt reduxEnhancer and middleware to configureStore callback API",
+      "type": "patch",
+      "packageName": "subapp-redux"
+    }
+  ],
+  "packageName": "subapp-redux",
+  "email": "pulkitsharmay2k@gmail.com"
+}

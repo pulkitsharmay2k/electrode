@@ -83,6 +83,39 @@ function replaceReducer(newReducers, info, storeContainer) {
   return store[originalReplaceReducerSym](reducer);
 }
 
+//
+// configureStore expects `enhancers` to be a callback that receives
+// getDefaultEnhancers and returns an array, while subapp's reduxEnhancer is a
+// function that returns a single enhancer (or an array of them).
+//
+function makeEnhancers(info) {
+  const { reduxEnhancer } = info;
+
+  if (typeof reduxEnhancer !== "function") {
+    return undefined;
+  }
+
+  return getDefaultEnhancers => {
+    const enhancers = reduxEnhancer();
+    return getDefaultEnhancers().concat(enhancers || []);
+  };
+}
+
+//
+// configureStore expects `middleware` to be a callback that receives
+// getDefaultMiddleware and returns an array, so wrap an array of middleware
+// in one, keeping the default middleware.
+//
+function makeMiddleware(info) {
+  const { middleware } = info;
+
+  if (!middleware || typeof middleware === "function") {
+    return middleware;
+  }
+
+  return getDefaultMiddleware => getDefaultMiddleware().concat(middleware);
+}
+
 function createSharedStore(initialState, info, storeContainer) {
   const sharedStoreName = info.reduxShareStore;
 
@@ -108,8 +141,8 @@ function createSharedStore(initialState, info, storeContainer) {
           info.reduxReducers
         ),
         preloadedState: initialState,
-        enhancers: info.reduxEnhancer,
-        middleware: info.middleware,
+        enhancers: makeEnhancers(info),
+        middleware: makeMiddleware(info),
       });
 
       store[originalReplaceReducerSym] = store.replaceReducer;
@@ -157,8 +190,8 @@ function createSharedStore(initialState, info, storeContainer) {
   return configureStore({
     reducer,
     preloadedState: initialState,
-    enhancers: info.reduxEnhancer,
-    middleware: info.middleware,
+    enhancers: makeEnhancers(info),
+    middleware: makeMiddleware(info),
   });
 }
 
