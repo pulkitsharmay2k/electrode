@@ -5,9 +5,30 @@ const Fs = require("fs");
 const Os = require("os");
 const Path = require("path");
 
-const ENTRY_MODULE = require.resolve("../../../src/partials/entry");
-const LOAD_XARC_OPTIONS_MODULE = require.resolve("../../../src/util/load-xarc-options");
-const JSONP_CDN = require.resolve("../../../src/client/webpack5-jsonp-cdn");
+/**
+ * load the partial from the typescript sources so it gets instrumented for coverage,
+ * falling back to the compiled output on node versions whose native typescript loader
+ * can't require src/partials/entry.ts from this commonjs spec
+ */
+function loadEntryModules() {
+  for (const base of ["../../../src", "../../../lib"]) {
+    try {
+      const mod = require(`${base}/partials/entry`);
+      const makeEntry = mod.default || mod;
+      if (typeof makeEntry !== "function") continue;
+      return {
+        makeEntry,
+        loadXarcOptions: require(`${base}/util/load-xarc-options`).loadXarcOptions,
+        jsonpCdn: require.resolve(`${base}/client/webpack5-jsonp-cdn`)
+      };
+    } catch (err) {
+      continue;
+    }
+  }
+  throw new Error("unable to load partials/entry from src or lib");
+}
+
+const { makeEntry: makeEntryPartialFn, loadXarcOptions, jsonpCdn: JSONP_CDN } = loadEntryModules();
 
 const DEV_HMR_DIR = ".__dev_hmr";
 const PROD_DIR = ".__prod__";
@@ -45,13 +66,16 @@ function makeApp(options: XarcOptions = {}) {
 }
 
 /**
- * load a fresh copy of the entry partial so the memoized xarc options are re-read
+ * point the entry partial at an app dir - loadXarcOptions memoizes its result for the
+ * life of the process, so swap the content of the memoized object in place
  */
 function makeEntryPartial(cwd: string) {
-  delete require.cache[ENTRY_MODULE];
-  delete require.cache[LOAD_XARC_OPTIONS_MODULE];
   process.env.XARC_CWD = cwd;
-  return require(ENTRY_MODULE)();
+  const cached = loadXarcOptions(cwd);
+  const options = JSON.parse(Fs.readFileSync(Path.join(cwd, ".etmp", "xarc-options.json"), "utf8"));
+  Object.keys(cached).forEach(key => delete cached[key]);
+  Object.assign(cached, options);
+  return makeEntryPartialFn();
 }
 
 function subApp(name: string, extra: any = {}) {
@@ -80,8 +104,6 @@ describe("partials/entry", () => {
 
   after(() => {
     tmpDirs.forEach(dir => Fs.rmSync(dir, { recursive: true, force: true }));
-    delete require.cache[ENTRY_MODULE];
-    delete require.cache[LOAD_XARC_OPTIONS_MODULE];
   });
 
   describe("entry.config.js", () => {
