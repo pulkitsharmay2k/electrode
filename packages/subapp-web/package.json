@@ -33,7 +33,7 @@
     "jsesc": "^3.0.2",
     "loadjs": "^4.2.0",
     "lodash": "^4.17.15",
-    "node-fetch": "2.6.12",
+    "node-fetch": "2.7.0",
     "optional-require": "^1.1.8",
     "subapp-util": "^1.1.5",
     "xaa": "^1.7.3"
@@ -51,7 +51,7 @@
     "@xarc/app": "^13.3.0",
     "@xarc/module-dev": "^4.1.0",
     "@xarc/run": "^1.1.1",
-    "chai": "4.3.6",
+    "chai": "4.5.0",
     "chai-as-promised": "^7.1.1",
     "electrode-archetype-njs-module-dev": "^3.0.3",
     "eslint": "^7.32.0",
