@@ -34,5 +34,12 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  // chalker 1.x is CommonJS and loads its optional chalk peer via require(),
+  // which cannot load ESM-only chalk >=5.  Keep it on the chalk 4.x line.
+  if (packageJson.name === 'chalker' && packageJson.peerDependencies) {
+    context.log('Fixed up peerDependencies for chalker');
+    packageJson.peerDependencies.chalk = '4.x';
+  }
+
   return packageJson;
 }
