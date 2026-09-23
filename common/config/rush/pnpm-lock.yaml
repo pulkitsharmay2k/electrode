@@ -2036,7 +2036,7 @@ packages:
         optional: true
 
   '@rush-temp/app-dev@file:projects/app-dev.tgz':
-    resolution: {integrity: sha512-uMPRYpYwfWgDAXjInqXy3TtEPgh36HvdZ6qU0f1R6Vb8cHVhf8Xe/wJrXtCAKL34eaWEuc7PFtR/+9QsbJ5FTA==, tarball: file:projects/app-dev.tgz}
+    resolution: {integrity: sha512-D5sd+PBctB7RWZQPS/eAmGyKT/N7mBh0mx6COZNTukS2wBj3mC+Wq9CTpTUzRGm5YvdTYxoIzykm+JLlSwmVoQ==, tarball: file:projects/app-dev.tgz}
     version: 0.0.0
 
   '@rush-temp/app@file:projects/app.tgz':
@@ -2044,7 +2044,7 @@ packages:
     version: 0.0.0
 
   '@rush-temp/create-app@file:projects/create-app.tgz':
-    resolution: {integrity: sha512-ynceM6aXhOB267oSrtB1IU19VOl2dEXei+wNUW+nmmHHYzzAWAiDgswYf7PWoTMnVTx+OzmOcLKSmI9xUYt7QQ==, tarball: file:projects/create-app.tgz}
+    resolution: {integrity: sha512-CK0Yls6Ux/DdTk08/sQbH7L2ktCLTScZPgDmsBRNOgWXG7slbRkAS7vocIlDXMbZGtLVKqVc82HLYlWfv5TkzA==, tarball: file:projects/create-app.tgz}
     version: 0.0.0
 
   '@rush-temp/dev-base@file:projects/dev-base.tgz':
@@ -2072,51 +2072,51 @@ packages:
     version: 0.0.0
 
   '@rush-temp/opt-eslint@file:projects/opt-eslint.tgz':
-    resolution: {integrity: sha512-8EmKOMdSLROjoIgZak7uqcoMJ16ItrJuHKKYzF1lS+TiPxYiyYP54eMQ24wAyC/wEwz+tWQMAToL3USPL3XeaQ==, tarball: file:projects/opt-eslint.tgz}
+    resolution: {integrity: sha512-pa+NXT/f1mLksjq8Bn52RmBIWNOv+QvEHIYLEaLORORHecjwqrsOW9kVaNCv93+JftBuqyjmj/QSBbGwUlvPzg==, tarball: file:projects/opt-eslint.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-jest@file:projects/opt-jest.tgz':
-    resolution: {integrity: sha512-LHdzUNw8hqu9WrNvzTY1fqmp697VBI+losnTvNKGPsGyLIuqc/V0OidiMD2S1V1DE5zjWarlvh9S5/KBBNyUSQ==, tarball: file:projects/opt-jest.tgz}
+    resolution: {integrity: sha512-Bw5fFaoRYnPuYFGuuut3HbFTgjudwlPD+TblTI7M9v0m9L2e4pwJN5Km6YuwVOF/yEpXzXhEW2CfbJ9aAyE32g==, tarball: file:projects/opt-jest.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-karma@file:projects/opt-karma.tgz':
-    resolution: {integrity: sha512-DbKS7kPqZ1aLYIwHt9A7hZaHl6RdvfcBDLeYIEtAwLYgodNm7z9VO1C+RCGw03OKa+slYWdIBwewEIzGUhvfpg==, tarball: file:projects/opt-karma.tgz}
+    resolution: {integrity: sha512-2hPrCJvRzwiKskxs8Sk6O9zt8vhV1Jdcc2Slbz8cdIK5Zfe7qN4j4riV0lLmGa7Ar76XHmRXHCyy5KAE+h+T1A==, tarball: file:projects/opt-karma.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-less@file:projects/opt-less.tgz':
-    resolution: {integrity: sha512-Ne7OzDl8Ff0PG3aTbVdXm9ViWDiFK9ZTP97xPNBcMnPDLa/2yFcNtXx1E3y3MflI6/okhAj1BE8hwLBQ04Wr8g==, tarball: file:projects/opt-less.tgz}
+    resolution: {integrity: sha512-mFVbBtwS73ll4h/0strRHQzPh/xfj45k7bNxi3lkibYom1c7PktA2HsZYXR7vDsFD3IELx10xhlz0NPKvIxb8Q==, tarball: file:projects/opt-less.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-mocha@file:projects/opt-mocha.tgz':
-    resolution: {integrity: sha512-jqBJ4GqRg9sxDdMqakGZ9Q5u8eyiI5Us692flS7Idg4wvZfAmdJpLyjBmwUQO7Cj38etrj0KSOUXPI5yrGx2ig==, tarball: file:projects/opt-mocha.tgz}
+    resolution: {integrity: sha512-yM7sezSqkt23hlyxOqztuQKyIti0/I2N2ztTE2dS+up1Nbhq3hhJ4vCRZAD+x8MzixNEm184cw4TtXk3aEf2Xg==, tarball: file:projects/opt-mocha.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-postcss@file:projects/opt-postcss.tgz':
-    resolution: {integrity: sha512-qLbWPV5AURHQyJQMmrJcMkACI8WMjp/4a5DKeQcV/KqiMl5+ns494P6vLvtFKooFfEz20n+6qdG+3pPnhjg8Pw==, tarball: file:projects/opt-postcss.tgz}
+    resolution: {integrity: sha512-MXJjhQSfpM5+Dbk1oAcPAKO5iCTKRoFOwxBc4l1YzCtPYFDR+rUwlvg8dUXn/ITmkVwJoRCIQKNuZ30E6/Bcog==, tarball: file:projects/opt-postcss.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-react@file:projects/opt-react.tgz':
-    resolution: {integrity: sha512-Wm1GeNh9a+tICs4uUfX7HmpVwSnZVUMVe1+aZQnzEoH4VRsRKRW5SJFrAQ5losPPNpvsRCtPYHdK06rtIoyNRg==, tarball: file:projects/opt-react.tgz}
+    resolution: {integrity: sha512-PnpbXD5Asb+8/5nTW+7wzs9z11d6aShlTTguxtcFbnsuyiFVHRnWj3xbGNZh5hWIwNnuBC1iQRUe4IPmjrvTbw==, tarball: file:projects/opt-react.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-sass@file:projects/opt-sass.tgz':
-    resolution: {integrity: sha512-Hkr6Pp73xINJ60PXwJHEdPjOYqbhWtV1flrBbFwZyGbL8m5368X608c0vPNK0MIGyqjuWPCeDn53Qb9GRYaCzQ==, tarball: file:projects/opt-sass.tgz}
+    resolution: {integrity: sha512-DFxvDZYnzjDL2gXC3IaDmMhirWXuo4gCFLWN6LdWm4AqWFSfMykGBoCTxuMiT9kF8zrd3UbOa0yOWsILLpbojw==, tarball: file:projects/opt-sass.tgz}
     version: 0.0.0
 
   '@rush-temp/opt-stylus@file:projects/opt-stylus.tgz':
-    resolution: {integrity: sha512-l6JLNKIn0TGT8UPxmKWyeKm9lpFsfruzlNoO2eQYSw8wPO0ZlauT33ADUqhwtOhm6dWO7GClC5MH6L+2vXIDBQ==, tarball: file:projects/opt-stylus.tgz}
+    resolution: {integrity: sha512-4a4kvtZ38U6tKPRog9zPz5OkhfhvvTR9RzPi5kGrHnLthu46xXDzs0pSn4g30CX0ZzmN9X2b2t7zD8cPafZQjg==, tarball: file:projects/opt-stylus.tgz}
     version: 0.0.0
 
   '@rush-temp/poc-subapp-redux@file:projects/poc-subapp-redux.tgz':
-    resolution: {integrity: sha512-FCxXIBhPYvdPvQMFtyedtW5HSRZjt80IFMn5soY5iFs0dUP6qFV11lzNqhGVEbriSkDnv67XMTpZtprQCSFExQ==, tarball: file:projects/poc-subapp-redux.tgz}
+    resolution: {integrity: sha512-DiZKln4wXUaqTH+cBzwj1YgucFacDeKgduAoPmCey0mbSsihRm7KSjTW/yrVzuTslFzPwLoNS9CWzJcM0PTz+w==, tarball: file:projects/poc-subapp-redux.tgz}
     version: 0.0.0
 
   '@rush-temp/poc-subapp@file:projects/poc-subapp.tgz':
-    resolution: {integrity: sha512-vkShI7CoAQ0Bxo1orYOMZg4eVwyx/xFWcx+tSMlLFELIXolPpfR/egggzHiga9YDxupyF8ct/hmG7PkVdTRHIw==, tarball: file:projects/poc-subapp.tgz}
+    resolution: {integrity: sha512-7qXRRpFlHMjEcjZnl2/UV35aGjHPjTJp/uzzbB98UY+bCWBfrfGot+0ch5HKjmhCOP0L1qLIGSJv6CeCHbGH6Q==, tarball: file:projects/poc-subapp.tgz}
     version: 0.0.0
 
   '@rush-temp/poc-subappv1-csp@file:projects/poc-subappv1-csp.tgz':
-    resolution: {integrity: sha512-MqhOyWH4+ql2mnwsKT0p+y94Vxqi9Mr4QRMX54iR2lkfbS9EURAfFmpkh1HLXDpKRXLzwf/LqSz6S8MraFbrFg==, tarball: file:projects/poc-subappv1-csp.tgz}
+    resolution: {integrity: sha512-nyD3nnOWbjqsnAXR8HE2CpRZfckX2+2f0bJ0/gRzx3cn2G6Q7aTFSYNZvkIbJPAOsEmPqNGuNZSSuzpyFh5ljw==, tarball: file:projects/poc-subappv1-csp.tgz}
     version: 0.0.0
 
   '@rush-temp/react-query@file:projects/react-query.tgz':
@@ -2156,7 +2156,7 @@ packages:
     version: 0.0.0
 
   '@rush-temp/subapp-react@file:projects/subapp-react.tgz':
-    resolution: {integrity: sha512-gEzVBJyqt516/j4OeS65XOAcZjZhPQRVfrARMTFrEze0cyqV9GoOjgH5Ek7Z56xiR9UW3k6ctOIoV6aeVo/vNA==, tarball: file:projects/subapp-react.tgz}
+    resolution: {integrity: sha512-kYnuz+V7q5n54DDXx5ownE24WxfAf1h/MEOSSRYT4urkLi4p5q2yoeuJntMyJzViBUm27G8IalU/WnNUDVMt8Q==, tarball: file:projects/subapp-react.tgz}
     version: 0.0.0
 
   '@rush-temp/subapp-redux@file:projects/subapp-redux.tgz':
@@ -2172,15 +2172,15 @@ packages:
     version: 0.0.0
 
   '@rush-temp/subapp-web@file:projects/subapp-web.tgz':
-    resolution: {integrity: sha512-uvxaXUvoOQWevr0GjNLYUoqroW4f9ZWe/Pcif2uiVeqb+7FlyBnAzPlptJNZQ0dSGeWaJR4J8ZbzfdDjIlI4cA==, tarball: file:projects/subapp-web.tgz}
+    resolution: {integrity: sha512-6AnKYrv9FxUpUNZLgAo5SQTqm6dxdl9WcXwGg5xr429OmLehJIh4SLURwNhtbqnyt+faPKQrXW4Oirwvfqo2sA==, tarball: file:projects/subapp-web.tgz}
     version: 0.0.0
 
   '@rush-temp/subapp2-basic@file:projects/subapp2-basic.tgz':
-    resolution: {integrity: sha512-toVW5z20DVQcsQsMsuukb8P5FemwUcOwEyLnhdArRF8JHfElln9lrd9FhJi9hZhUkJj5UBhgLb4LbyOcHn43NA==, tarball: file:projects/subapp2-basic.tgz}
+    resolution: {integrity: sha512-6tx8s+Z7vuenfgGP6ilolGB71VnLJ08o5xvGKTippgo0Ab4ulDM3SvFNcABm5y00LCh9PDgDpSuIitgUGWis9Q==, tarball: file:projects/subapp2-basic.tgz}
     version: 0.0.0
 
   '@rush-temp/subapp2-poc@file:projects/subapp2-poc.tgz':
-    resolution: {integrity: sha512-Mxwebi/qDVyuO2qXRTTBxfQR2Qs0+Tip5Bsz9WBrAFaqlQ2lRYuoYoF2fXvYpKL0w0NHQcAt6ZmsThsBI5+1CQ==, tarball: file:projects/subapp2-poc.tgz}
+    resolution: {integrity: sha512-xS0+4OUNBhP4C/wvLSnzCPWkdbNhUfckYTt/zdwwCqWl+Ev2zNikKswzBtytVemKyB4jaUCP7NHGbgKMqzMqMQ==, tarball: file:projects/subapp2-poc.tgz}
     version: 0.0.0
 
   '@rush-temp/subapp@file:projects/subapp.tgz':
@@ -2196,7 +2196,7 @@ packages:
     version: 0.0.0
 
   '@rush-temp/webpack@file:projects/webpack.tgz':
-    resolution: {integrity: sha512-t4rCk0FewZQakHxFR77U6DAgxabVHgxi8gu2QJ/g5MnKwxbNqpFVvWYof+OQsG0d6sUPJ7RBhc/JrzJY+Xg3kg==, tarball: file:projects/webpack.tgz}
+    resolution: {integrity: sha512-SaGha+UBU+Papcci4CM8Br9pPunm99tBThe9Njtw1rbs09rUmICZ+XWnwR4Re+vaKJKoaUBBqys63PjZ1UEldw==, tarball: file:projects/webpack.tgz}
     version: 0.0.0
 
   '@shikijs/core@1.29.2':
@@ -2288,6 +2288,9 @@ packages:
 
   '@sinonjs/text-encoding@0.7.3':
     resolution: {integrity: sha512-DE427ROAphMQzU4ENbliGYrBSYPXF+TtLg9S8vzeA+OF4ZKzoDdzfL8sxuMUGS/lgRhM6j1URSk9ghf7Xo1tyA==}
+    deprecated: |-
+      Deprecated: no longer maintained and no longer used by Sinon packages. See
+        https://github.com/sinonjs/nise/issues/243 for replacement details.
 
   '@so-ric/colorspace@1.1.6':
     resolution: {integrity: sha512-/KiKkpHNOBgkFJwu9sh48LkHSMYGyuTcSFK/qMBdnOAlrRJzRSXAOFB5qwzaVQuDl8wAvHVMkaASQDReTahxuw==}
@@ -2651,6 +2654,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -3290,8 +3294,8 @@ packages:
   bluebird@3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
 
-  body-parser@1.20.4:
-    resolution: {integrity: sha512-ZTgYYLMOXY9qKU/57FAo8F+HA2dGX7bqGc71txDRC1rS4frdFI5R7NhluHxH6M0YItAP0sHB4uqAOcYKxO6uGA==}
+  body-parser@1.20.8:
+    resolution: {integrity: sha512-JNcyFQ64OiijEkPzUBTCe+hyPXUD/3LEldGQ6iF5LR1w00mx9o7xtDWHXBY2iItjdCFGoilOLNQbH943ut7pHA==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
   boolbase@1.0.0:
@@ -4512,8 +4516,8 @@ packages:
     resolution: {integrity: sha512-2Zks0hf1VLFYI1kbh0I5jP3KHHyCHpkfyHBzsSXRFgl/Bg9mWYfMW8oD+PdMPlEwy5HNsR9JutYy6pMeOh61nw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  express@4.22.1:
-    resolution: {integrity: sha512-F2X8g9P1X7uCPZMA3MVf9wcTqlyNp7IhH5qPCI0izhaOIYXaW9L535tGA3qmjRzpH+bZczqq7hVKxTR4NWnu+g==}
+  express@4.22.3:
+    resolution: {integrity: sha512-Bdcs4+3qlpVlx2NRn6fgX2Ue2/gGRaPeawebgclM0ERSCqDpA+owF1fdPwjJUTAJWMTuAaxjDf+hzb0/4eKvvw==}
     engines: {node: '>= 0.10.0'}
 
   extend@3.0.2:
@@ -4840,25 +4844,27 @@ packages:
 
   glob@10.5.0:
     resolution: {integrity: sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@11.1.0:
     resolution: {integrity: sha512-vuNwKSaKiqm7g0THUBu2x7ckSs3XJLXE+2ssL7/MfTGPLLcrJQ/4Uq1CjPTtO5cCIiRxqvN6Twy1qOwhL0Xjcw==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@7.1.2:
     resolution: {integrity: sha512-MJTUg1kjuLeQCJ+ccE4Vpa6kKVXkPYJ2mOCQyUuKLcLQsdrMCpBPUi8qVE6+YuaJkozeA9NusTAw3hLr8Xe5EQ==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -6626,8 +6632,8 @@ packages:
     resolution: {integrity: sha512-oWyT4gICAu+kaA7QWk/jvCHWarMKNs6pXOGWKDTr7cw4IGcUbW+PeTfbaQiLGheFRpjo6O9J0PmyMfQPjH71oA==}
     engines: {node: 20 || >=22}
 
-  path-to-regexp@0.1.12:
-    resolution: {integrity: sha512-RA1GjUVMnvYFxuqovrEqZoxxW5NUZqbwKtYz/Tt7nXerk0LbLblQmrsgdeOxV5SFHf0UDggjS/bSeOZwt1pmEQ==}
+  path-to-regexp@0.1.13:
+    resolution: {integrity: sha512-A/AGNMFN3c8bOlvV9RreMdrv7jsmF9XIfDeCd87+I8RNg6s78BhJxMu69NEMHBSJFxKidViTEdruRwEk/WIKqA==}
 
   path-to-regexp@1.9.0:
     resolution: {integrity: sha512-xIp7/apCFJuUHdDLWe8O1HIkb0kQrOMb/0u6FXQjemHn/ii5LrIzU6bdECnsiTF/GjZkMEKg1xdiZwNqDYlZ6g==}
@@ -7233,8 +7239,8 @@ packages:
     resolution: {integrity: sha512-8YOJEHtxpySA3fFDyCRxA+UUV+fA+rTWnuWvylOK/NCjhY+b4ocCtmu8TtsWb+mYeU+GCHf/S66KZF/AsteKHg==}
     engines: {node: '>=0.9'}
 
-  qs@6.14.1:
-    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
+  qs@6.16.0:
+    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
     engines: {node: '>=0.6'}
 
   querystringify@2.2.0:
@@ -7807,6 +7813,10 @@ packages:
     resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
     engines: {node: '>= 0.4'}
 
+  side-channel-list@1.0.1:
+    resolution: {integrity: sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==}
+    engines: {node: '>= 0.4'}
+
   side-channel-map@1.0.1:
     resolution: {integrity: sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==}
     engines: {node: '>= 0.4'}
@@ -7817,6 +7827,10 @@ packages:
 
   side-channel@1.1.0:
     resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
+    engines: {node: '>= 0.4'}
+
+  side-channel@1.1.1:
+    resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
 
   signal-exit@3.0.7:
@@ -8580,6 +8594,7 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
@@ -12478,8 +12493,8 @@ snapshots:
 
   '@types/sinon-chai@3.2.12':
     dependencies:
-      '@types/chai': 4.3.20
-      '@types/sinon': 10.0.20
+      '@types/chai': 5.2.3
+      '@types/sinon': 17.0.4
 
   '@types/sinon@10.0.20':
     dependencies:
@@ -13588,7 +13603,7 @@ snapshots:
 
   bluebird@3.7.2: {}
 
-  body-parser@1.20.4:
+  body-parser@1.20.8:
     dependencies:
       bytes: 3.1.2
       content-type: 1.0.5
@@ -13598,7 +13613,7 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.4.24
       on-finished: 2.4.1
-      qs: 6.14.1
+      qs: 6.16.0
       raw-body: 2.5.3
       type-is: 1.6.18
       unpipe: 1.0.0
@@ -15065,11 +15080,11 @@ snapshots:
       jest-message-util: 29.7.0
       jest-util: 29.7.0
 
-  express@4.22.1:
+  express@4.22.3:
     dependencies:
       accepts: 1.3.8
       array-flatten: 1.1.1
-      body-parser: 1.20.4
+      body-parser: 1.20.8
       content-disposition: 0.5.4
       content-type: 1.0.5
       cookie: 0.7.2
@@ -15086,9 +15101,9 @@ snapshots:
       methods: 1.1.2
       on-finished: 2.4.1
       parseurl: 1.3.3
-      path-to-regexp: 0.1.12
+      path-to-regexp: 0.1.13
       proxy-addr: 2.0.7
-      qs: 6.14.1
+      qs: 6.16.0
       range-parser: 1.2.1
       safe-buffer: 5.2.1
       send: 0.19.2
@@ -16829,7 +16844,7 @@ snapshots:
   karma@6.4.4:
     dependencies:
       '@colors/colors': 1.5.0
-      body-parser: 1.20.4
+      body-parser: 1.20.8
       braces: 3.0.3
       chokidar: 3.6.0
       connect: 3.7.0
@@ -17685,7 +17700,7 @@ snapshots:
       lru-cache: 11.2.4
       minipass: 7.1.2
 
-  path-to-regexp@0.1.12: {}
+  path-to-regexp@0.1.13: {}
 
   path-to-regexp@1.9.0:
     dependencies:
@@ -18333,9 +18348,10 @@ snapshots:
 
   qjobs@1.2.0: {}
 
-  qs@6.14.1:
+  qs@6.16.0:
     dependencies:
-      side-channel: 1.1.0
+      es-define-property: 1.0.1
+      side-channel: 1.1.1
 
   querystringify@2.2.0: {}
 
@@ -18928,6 +18944,11 @@ snapshots:
       es-errors: 1.3.0
       object-inspect: 1.13.4
 
+  side-channel-list@1.0.1:
+    dependencies:
+      es-errors: 1.3.0
+      object-inspect: 1.13.4
+
   side-channel-map@1.0.1:
     dependencies:
       call-bound: 1.0.4
@@ -18948,6 +18969,14 @@ snapshots:
       es-errors: 1.3.0
       object-inspect: 1.13.4
       side-channel-list: 1.0.0
+      side-channel-map: 1.0.1
+      side-channel-weakmap: 1.0.2
+
+  side-channel@1.1.1:
+    dependencies:
+      es-errors: 1.3.0
+      object-inspect: 1.13.4
+      side-channel-list: 1.0.1
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
@@ -19296,7 +19325,7 @@ snapshots:
       internal-slot: 1.1.0
       regexp.prototype.flags: 1.5.4
       set-function-name: 2.0.2
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
   string.prototype.repeat@1.0.0:
     dependencies:
@@ -20005,7 +20034,7 @@ snapshots:
       chalk: 2.4.2
       commander: 2.20.3
       ejs: 2.7.4
-      express: 4.22.1
+      express: 4.22.3
       filesize: 3.6.1
       gzip-size: 5.1.1
       lodash: 4.17.23
